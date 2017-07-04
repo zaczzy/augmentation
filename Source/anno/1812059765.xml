@@ -1,0 +1,26 @@
+<annotation>
+  <folder>anno</folder>
+  <filename>1812059765</filename>
+  <path>/home/gq/Desktop/2017_06_16_zhangnan/anno/1812059765.xml</path>
+  <source>
+    <database>Unknown</database>
+  </source>
+  <size>
+    <width>0</width>
+    <height>0</height>
+    <depth>3</depth>
+  </size>
+  <segmented>0</segmented>
+  <object>
+    <name>fractura</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+      <xmin>494</xmin>
+      <ymin>1361</ymin>
+      <xmax>656</xmax>
+      <ymax>1534</ymax>
+    </bndbox>
+  </object>
+</annotation>
