@@ -13,16 +13,16 @@ import shutil as sh
 
 # 3rd digit. 0: none, 1: equalize histogram
 def interface(imgp, xmlp, id, img_save, xml_save, mode):
-    img = cv2.imread(imgp)
+    img = cv2.imread(imgp, flags=0)
     if mode == '0':
-        cv2.imwrite(img_save + id + '_nohist', img, [cv2.IMWRITE_JPEG_QUALITY, 100])
-        sh.copyfile(xmlp, xml_save + id + '_nohist')
-        return img_save + id + '_nohist', xml_save + id + '_nohist', id + '_nohist'
+        cv2.imwrite(img_save + id + '_nohist.jpg', img, [cv2.IMWRITE_JPEG_QUALITY, 100])
+        sh.copyfile(xmlp, xml_save + id + '_nohist.xml')
+        return img_save + id + '_nohist.jpg', xml_save + id + '_nohist.xml', id + '_nohist'
     elif mode == '1':
         hist = cv2.equalizeHist(img)
-        cv2.imwrite(img_save + id + '_hist', hist, [cv2.IMWRITE_JPEG_QUALITY, 100])
-        sh.copyfile(xmlp, xml_save + id + '_hist')
-        return img_save + id + '_hist', xml_save + id + '_hist', id + '_hist'
+        cv2.imwrite(img_save + id + '_hist.jpg', hist, [cv2.IMWRITE_JPEG_QUALITY, 100])
+        sh.copyfile(xmlp, xml_save + id + '_hist.xml')
+        return img_save + id + '_hist.jpg', xml_save + id + '_hist.xml', id + '_hist'
     else:
         raise RuntimeError("WTF")
 

@@ -4,14 +4,14 @@ from itertools import cycle
 from collections import defaultdict
 from random import randint
 from importlib import import_module
+import shutil as sh
 
 source_path = os.path.abspath('Source')
-imgset_savepath = os.path.abspath('Augmented/ImageSets/Main')
-anno_savepath = os.path.abspath('Augmented/Annotations')
-img_savepath = os.path.abspath('Augmented/JPEGImages')
+imgset_savepath = os.path.abspath('Augmented/ImageSets/Main/')
+anno_savepath = '/home/zac/PycharmProjects/augmentation/Augmented/Annotations/'
+img_savepath = '/home/zac/PycharmProjects/augmentation/Augmented/JPEGImages/'
 
 print(os.path.isfile(os.path.join(imgset_savepath, 'trainval.txt')))
-
 trainval = open(os.path.join(imgset_savepath, 'trainval.txt'), 'w')
 
 augment_counter = 0
@@ -34,11 +34,19 @@ def generate_transform(person):
     return code
 
 
-def transform(imgp, xmlp, next_person, img_savepath, anno_savepath, imgset_savepath):
-    pass
+def transform(code, imgp, xmlp, person, img_savepath, anno_savepath, trainval):
+    crop = import_module('crop')
+    sharpen = import_module('sharpen')
+    equal_hist = import_module('equal_hist')
+    img_tmp = '/home/zac/PycharmProjects/augmentation/tmp/jpg_data/'
+    xml_tmp = '/home/zac/PycharmProjects/augmentation/tmp/anno/'
+    imgp, xmlp, id = crop.interface(imgp, xmlp, person, img_tmp, xml_tmp, code[0])
+    imgp, xmlp, id = sharpen.interface(imgp, xmlp, id, img_tmp, xml_tmp, code[1])
+    _, _, id = equal_hist.interface(imgp, xmlp, id, img_savepath, anno_savepath, code[2])
+    trainval.write(id + '\n')
+    print(code, id)
 
-
-while augment_counter < 4000:
+while augment_counter < 40:
     # get transform code
     transform_code = generate_transform(next_person)
     # get img array and xml
@@ -46,9 +54,14 @@ while augment_counter < 4000:
     xmlp = os.path.join(os.path.join(source_path, 'anno'), next_xml)
     # transform the img and xml according to transform code
     # save the img and xml in save path
-    transform(imgp, xmlp, next_person, img_savepath, anno_savepath, imgset_savepath)
+    transform(transform_code, imgp, xmlp, next_person, img_savepath, anno_savepath, trainval)
+    sh.rmtree('tmp')
+    os.mkdir('tmp')
+    os.mkdir('tmp/jpg_data')
+    os.mkdir('tmp/anno')
     next_img = next(im_cycle)
     next_person = next_img[:-4]
     next_xml = next_person + '.xml'
     
     augment_counter += 1
+trainval.close()

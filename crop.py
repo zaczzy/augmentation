@@ -9,9 +9,9 @@ yMax = 0
 def interface(imgp, xmlp, id, img_save, xml_save, mode):
     if mode == '0':
         img = cv2.imread(imgp)
-        cv2.imwrite(img_save + id + '_nocrop', img, [cv2.IMWRITE_JPEG_QUALITY, 100])
+        cv2.imwrite(img_save + id + '_nocrop.jpg', img, [cv2.IMWRITE_JPEG_QUALITY, 100])
         sh.copyfile(xmlp, xml_save + id + '_nocrop')
-        return img_save + id + '_nocrop', xml_save + id + '_nocrop', id + '_nocrop'
+        return img_save + id + '_nocrop.jpg', xml_save + id + '_nocrop', id + '_nocrop'
     elif mode == '1':
         return crop(imgp, xmlp, id, img_save, xml_save, True)
     elif mode == '2':
@@ -37,9 +37,9 @@ def crop(imgp, xmlp, id, img_save, xml_save, top_crop):
         crop_img = img[yMin / 2: height, 0: width].copy()
     else:
         crop_img = img[0:(height + yMax) / 2, 0:width].copy()
-    img_savep = img_save + id + '_crop_' + str(top_crop).lower()
+    img_savep = img_save + id + '_crop_' + str(top_crop).lower() + '.jpg'
     cv2.imwrite(img_savep, crop_img, [cv2.IMWRITE_JPEG_QUALITY, 100])
-    xml_savep = xml_save + id + '_crop_' + str(top_crop).lower()
+    xml_savep = xml_save + id + '_crop_' + str(top_crop).lower() + '.xml'
     sh.copyfile(xmlp, xml_savep)
     if top_crop:
         tree = ET.parse(xml_savep)
