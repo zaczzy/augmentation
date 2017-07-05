@@ -6,6 +6,7 @@ from random import randint
 from importlib import import_module
 import shutil as sh
 
+augment_limit = 4000  # your target number of images
 source_path = os.path.abspath('Source')
 imgset_savepath = os.path.abspath('Augmented/ImageSets/Main/')
 anno_savepath = '/home/<Username>/PycharmProjects/augmentation/Augmented/Annotations/'
@@ -27,13 +28,14 @@ transform_history = defaultdict(set)
 # 2nd digit. 0: none, 1: sharpen, 2; excessive sharpen, 3: edge enhance
 # 3rd digit. 0: none, 1: equalize histogram
 def generate_transform(person):
-    code = str(randint(0, 2)) + str(randint(0, 3)) + str(randint(0, 1))
+    code = str(randint(0, 2)) + str(randint(0, 3)) + str(rfandint(0, 1))
     while code in transform_history[person]:
         code = str(randint(0, 2)) + str(randint(0, 3)) + str(randint(0, 1))
     transform_history[person].add(code)
     return code
 
 
+# perform transformation for each image
 def transform(code, imgp, xmlp, person, img_savepath, anno_savepath, trainval):
     crop = import_module('crop')
     sharpen = import_module('sharpen')
@@ -46,7 +48,8 @@ def transform(code, imgp, xmlp, person, img_savepath, anno_savepath, trainval):
     trainval.write(id + '\n')
     print(code, id)
 
-while augment_counter < 40:
+
+while augment_counter < augment_limit:
     # get transform code
     transform_code = generate_transform(next_person)
     # get img array and xml
