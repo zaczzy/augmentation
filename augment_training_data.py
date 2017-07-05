@@ -8,8 +8,8 @@ import shutil as sh
 
 source_path = os.path.abspath('Source')
 imgset_savepath = os.path.abspath('Augmented/ImageSets/Main/')
-anno_savepath = '/home/zac/PycharmProjects/augmentation/Augmented/Annotations/'
-img_savepath = '/home/zac/PycharmProjects/augmentation/Augmented/JPEGImages/'
+anno_savepath = '/home/<Username>/PycharmProjects/augmentation/Augmented/Annotations/'
+img_savepath = '/home/<Username>/PycharmProjects/augmentation/Augmented/JPEGImages/'
 
 print(os.path.isfile(os.path.join(imgset_savepath, 'trainval.txt')))
 trainval = open(os.path.join(imgset_savepath, 'trainval.txt'), 'w')
