@@ -6,8 +6,8 @@ from random import randint
 from importlib import import_module
 import shutil as sh
 
-augment_limit = 4000  # your target number of images
-source_path = os.path.abspath('Source')
+augment_limit = 400  # your target number of images
+source_path = os.path.abspath('fractura')
 imgset_savepath = os.path.abspath('Augmented/ImageSets/Main/')
 anno_savepath = '/home/<Username>/PycharmProjects/augmentation/Augmented/Annotations/'
 img_savepath = '/home/<Username>/PycharmProjects/augmentation/Augmented/JPEGImages/'
@@ -28,7 +28,7 @@ transform_history = defaultdict(set)
 # 2nd digit. 0: none, 1: sharpen, 2; excessive sharpen, 3: edge enhance
 # 3rd digit. 0: none, 1: equalize histogram
 def generate_transform(person):
-    code = str(randint(0, 2)) + str(randint(0, 3)) + str(rfandint(0, 1))
+    code = str(randint(0, 2)) + str(randint(0, 3)) + str(randint(0, 1))
     while code in transform_history[person]:
         code = str(randint(0, 2)) + str(randint(0, 3)) + str(randint(0, 1))
     transform_history[person].add(code)

@@ -10,8 +10,8 @@ def interface(imgp, xmlp, id, img_save, xml_save, mode):
     if mode == '0':
         img = cv2.imread(imgp)
         cv2.imwrite(img_save + id + '_nocrop.jpg', img, [cv2.IMWRITE_JPEG_QUALITY, 100])
-        sh.copyfile(xmlp, xml_save + id + '_nocrop')
-        return img_save + id + '_nocrop.jpg', xml_save + id + '_nocrop', id + '_nocrop'
+        sh.copyfile(xmlp, xml_save + id + '_nocrop.xml')
+        return img_save + id + '_nocrop.jpg', xml_save + id + '_nocrop.xml', id + '_nocrop'
     elif mode == '1':
         return crop(imgp, xmlp, id, img_save, xml_save, True)
     elif mode == '2':
